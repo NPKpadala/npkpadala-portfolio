@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>npkpadala | Risk is the Heart of Success</title>
+    <title>npkpadala | Systems & Capabilities</title>
     <link rel="canonical" href="https://npkpadala.com/">
     <meta name="description" content="Praveen Padala - full-stack engineer who designs, builds and operates production SaaS end to end. Three live systems on one cloud VM: PDFWala, RotatePro and a self-built ops monitor.">
     <meta name="author" content="Praveen Padala">
@@ -302,40 +302,7 @@
         #sparkle-field {
             position: absolute; inset: 0;
             width: 100%; height: 100%;
-            z-index: 1; pointer-events: none;
-            opacity: 0.6;                  /* rotating point-sphere; present but behind the text */
-        }
-        /* Custom CI/CD pipeline lattice — sits beneath the sparkle nebula */
-        #cicd-pipeline {
-            position: absolute; inset: 0;
-            width: 100%; height: 100%;
             z-index: 0; pointer-events: none;
-            opacity: 0.6;
-        }
-        /* Low-opacity hero description with a horizontal light wave sweeping across */
-        .wave-text {
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(100deg,
-                rgba(150,160,180,0.34) 0%,
-                rgba(150,160,180,0.34) 42%,
-                rgba(235,242,255,0.95) 50%,
-                rgba(150,160,180,0.34) 58%,
-                rgba(150,160,180,0.34) 100%);
-            background-size: 250% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: waveSweep 7s linear infinite;
-        }
-        @keyframes waveSweep {
-            0%   { background-position: 220% 0; }
-            100% { background-position: -60% 0; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .wave-text {
-                animation: none; background-image: none;
-                color: rgba(170,180,198,0.8); -webkit-text-fill-color: rgba(170,180,198,0.8);
-            }
         }
         .hero-live {
             display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center;
@@ -357,13 +324,57 @@
         .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
         .nav-link.active { color: #F5F6F8; }
     </style>
-
     <style>
-        /* Home: pure black stage so the sparkle field is the star */
+        /* Black + blue stage so the CI/CD pipeline animation pops */
         body { background-color: #000; }
+        body::before {
+            content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background:
+                radial-gradient(1200px 620px at 50% -12%, rgba(47,111,237,0.14), transparent 62%),
+                radial-gradient(900px 520px at 100% 108%, rgba(18,59,148,0.12), transparent 60%),
+                #000;
+        }
+        /* stronger pipeline + slightly dimmer grid against the darker base */
+        .cicd-bg { opacity: 0.85; }
+        .ambient-mesh .mesh-blob { opacity: 0.16; }
     </style>
 </head>
 <body class="selection:bg-accent selection:text-white relative">
+
+<!-- Particle network (subtle depth) -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- BACKGROUND: CI/CD PIPELINE ANIMATION -->
+    <div class="cicd-bg" aria-hidden="true">
+        <div class="cicd-lane" style="top: 50%;">
+            <div class="cicd-line"></div>
+            <div class="cicd-node" style="left: 8%;"></div>
+            <div class="cicd-node" style="left: 30%;"></div>
+            <div class="cicd-node" style="left: 52%;"></div>
+            <div class="cicd-node" style="left: 74%;"></div>
+            <div class="cicd-node" style="left: 92%;"></div>
+            <div class="cicd-label" style="left: 8%;"><span class="dot">&#9670;</span> git commit</div>
+            <div class="cicd-label" style="left: 30%;"><span class="dot">&#9670;</span> build</div>
+            <div class="cicd-label" style="left: 52%;"><span class="dot">&#9670;</span> test</div>
+            <div class="cicd-label" style="left: 74%;"><span class="dot">&#9670;</span> deploy</div>
+            <div class="cicd-label" style="left: 92%;"><span class="dot">&#9670;</span> monitor</div>
+            <div class="cicd-packet" style="animation-duration: 11s;"></div>
+            <div class="cicd-packet" style="animation-duration: 11s; animation-delay: -5.5s;"></div>
+        </div>
+        <div class="cicd-lane" style="top: 18%;"><div class="cicd-line" style="opacity:.5;"></div><div class="cicd-packet small" style="animation-duration: 15s;"></div></div>
+        <div class="cicd-lane" style="top: 30%;"><div class="cicd-line" style="opacity:.4;"></div><div class="cicd-packet small" style="animation-duration: 18s; animation-delay:-6s;"></div></div>
+        <div class="cicd-lane" style="top: 68%;"><div class="cicd-line" style="opacity:.4;"></div><div class="cicd-packet small" style="animation-duration: 17s; animation-delay:-3s;"></div></div>
+        <div class="cicd-lane" style="top: 82%;"><div class="cicd-line" style="opacity:.5;"></div><div class="cicd-packet small" style="animation-duration: 14s; animation-delay:-8s;"></div></div>
+    </div>
+
+    <!-- Ambient Drifting Mesh (depth) -->
+    <div class="ambient-mesh">
+        <div class="mesh-blob blue-1"></div>
+        <div class="mesh-blob blue-2"></div>
+    </div>
+
+    <!-- Background Grid (Subtle structure) -->
+    <div class="fixed inset-0 pointer-events-none z-0 bg-grid" style="opacity: 0.22;"></div>
 
 
     <nav id="nav-shell" class="fixed top-0 w-full z-50 pt-0">
@@ -372,7 +383,7 @@
                 npkpadala<span class="text-accent animate-pulse">_</span>
             </a>
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-textMuted">
-                <a href="systems.html" class="nav-link hover:text-textMain transition-colors magnetic-element">Systems</a>
+                <a href="systems.html" class="nav-link active transition-colors magnetic-element">Systems</a>
                 <a href="projects.html" class="nav-link hover:text-textMain transition-colors magnetic-element">Projects</a>
                 <a href="contact.html" class="nav-link hover:text-textMain transition-colors magnetic-element">Contact</a>
             </div>
@@ -387,44 +398,176 @@
     </nav>
 
     <main class="relative z-10">
-        <section id="hero" class="min-h-screen flex items-center justify-center px-6 relative pt-28 pb-16 overflow-hidden">
-            <canvas id="cicd-pipeline" aria-hidden="true"></canvas>
-            <canvas id="sparkle-field" aria-hidden="true"></canvas>
-            <div class="relative z-10 max-w-4xl mx-auto text-center">
-                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5 backdrop-blur-sm mb-8 text-xs font-mono text-glow gsap-hero-sub">
+        <section class="pt-40 pb-16 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left">
+                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5 backdrop-blur-sm mb-6 text-xs font-mono text-glow gsap-fade-up">
                     <span class="w-2.5 h-2.5 rounded-full bg-accent heartbeat-pulse shadow-[0_0_8px_var(--accent)]"></span>
-                    <span class="tracking-wide">ALL PRODUCTION SYSTEMS NOMINAL</span>
+                    <span class="tracking-wide">SIX CAPABILITY AREAS &middot; ONE OPERATOR</span>
                 </div>
-
-                <h1 id="kinetic-headline" class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 text-textMain leading-[1.05]">
-                    <!-- Injected via JS for stagger effect -->
-                </h1>
-
-                <p class="text-lg mb-10 max-w-2xl mx-auto font-light gsap-hero-sub wave-text">
-                    We design, build and operate enterprise software, SaaS platforms, AI automation, and the cloud infrastructure that keeps it all alive &mdash; end to end.
-                </p>
-
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 gsap-hero-sub">
-                    <button type="button" data-open-modal class="magnetic-element relative inline-flex items-center justify-center px-8 py-4 text-sm font-bold text-white bg-accent rounded-lg overflow-hidden group">
-                        <span class="absolute inset-0 w-full h-full bg-glow heartbeat-pulse opacity-0 group-hover:opacity-40 transition-opacity"></span>
-                        <span class="relative flex items-center gap-2">
-                            Initialize Project
-                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </span>
-                    </button>
-                    <a href="projects.html" class="magnetic-element inline-flex items-center justify-center px-8 py-4 text-sm font-semibold text-textMain border border-white/10 rounded-lg hover:border-accent/50 hover:bg-white/5 transition-colors">
-                        View Projects
-                    </a>
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-5 gsap-fade-up">Systems &amp; Capabilities</h1>
+                <p class="text-textMuted text-lg font-light leading-relaxed mb-4 gsap-fade-up">Everything I design, build and operate &mdash; and the pipeline that carries it to production. The cube shows <span class="text-textMain">what</span> I build; the stages below show <span class="text-textMain">how</span> it ships.</p>
+            </div>
+            <!-- RIGHT: premium glass cube -->
+                <div class="flex flex-col items-center justify-center z-10" id="cube-wrap">
+                    <div class="cube-scene" id="cube-scene" role="button" tabindex="0" aria-label="Explore capabilities">
+                        <div class="cube" id="value-cube">
+                            <div class="cube-face face-front">
+                                <span class="c-icon"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></span>
+                                <span class="c-title">Business Software</span>
+                            </div>
+                            <div class="cube-face face-right">
+                                <span class="c-icon"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3z"/><circle cx="18" cy="18" r="2.2"/></svg></span>
+                                <span class="c-title">AI Automation</span>
+                            </div>
+                            <div class="cube-face face-back">
+                                <span class="c-icon"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>
+                                <span class="c-title">Web Applications</span>
+                            </div>
+                            <div class="cube-face face-left">
+                                <span class="c-icon"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg></span>
+                                <span class="c-title">Mobile Apps</span>
+                            </div>
+                            <div class="cube-face face-top">
+                                <span class="c-icon"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M7 17a4 4 0 010-8 5.5 5.5 0 0110.6-1.4A4 4 0 0117 17H7z"/><path d="M12 12v5M9.5 14.5L12 12l2.5 2.5"/></svg></span>
+                                <span class="c-title">Cloud &amp; DevOps</span>
+                            </div>
+                            <div class="cube-face face-bottom">
+                                <span class="c-icon"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6M9 11h.01M15 11h.01"/></svg></span>
+                                <span class="c-title">Enterprise Solutions</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Active-face subtitle -->
+                    <div class="mt-8 text-center h-16 max-w-xs">
+                        <div id="cube-subtitle" class="text-sm text-textMuted leading-snug transition-opacity duration-300"></div>
+                        <div class="mt-2 text-[11px] font-mono text-accent/80 flex items-center justify-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                            <span id="cube-hint">click a face to explore &rarr;</span>
+                        </div>
+                    </div>
                 </div>
+        </section>
 
-                <div class="hero-live gsap-hero-sub">
-                    <span class="uppercase tracking-widest text-accent/80">Live in production</span>
-                    <a href="projects.html"><span class="live-dot"></span>PDFWala</a>
-                    <a href="projects.html"><span class="live-dot"></span>RotatePro</a>
-                    <a href="projects.html"><span class="live-dot"></span>Ops Monitor</a>
+        <section id="pipeline" class="px-6 pb-24 max-w-7xl mx-auto">
+            <div class="mb-10 gsap-fade-up">
+                <div class="text-[10px] uppercase tracking-[0.25em] font-mono text-accent mb-2">Operation Pipeline</div>
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">From architecture to edge deployment</h2>
+                <p class="text-textMuted max-w-2xl">Four stages every system passes through &mdash; designed up front, shipped through strict CI, deployed and observed in production.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
+
+
+                    <div class="magnetic-card rounded-xl p-6 flex flex-col gpu-accel group gsap-fade-up min-h-[440px]">
+                        <div class="text-accent font-mono text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
+                            <span class="w-1 h-1 rounded-full bg-accent"></span> 01. Architecture
+                        </div>
+                        <h3 class="text-2xl font-bold mb-6 text-white group-hover:text-glow transition-colors">Systems Design</h3>
+                        <div class="flex-grow bg-[#050505] rounded-lg border border-white/5 p-5 font-mono text-xs text-textMuted overflow-hidden relative shadow-inner">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent to-transparent opacity-50"></div>
+                            <span class="text-[#c678dd]">type</span> <span class="text-[#e5c07b]">TenantConfig</span> = {<br/>
+                            &nbsp;&nbsp;id: <span class="text-[#56b6c2]">UUID</span>;<br/>
+                            &nbsp;&nbsp;access: <span class="text-[#98c379]">'rbac'</span>;<br/>
+                            &nbsp;&nbsp;audit: <span class="text-[#98c379]">'append_only'</span>;<br/>
+                            }<br/><br/>
+                            <span class="text-gray-500">// Isolation + audit designed</span><br/>
+                            <span class="text-gray-500">// upfront, not bolted on.</span><br/><br/>
+                            <span class="text-white animate-pulse">_</span>
+                        </div>
+                    </div>
+
+                    <div class="magnetic-card rounded-xl p-6 flex flex-col gpu-accel group gsap-fade-up min-h-[440px]">
+                        <div class="text-accent font-mono text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
+                            <span class="w-1 h-1 rounded-full bg-accent"></span> 02. Execution
+                        </div>
+                        <h3 class="text-2xl font-bold mb-6 text-white group-hover:text-glow transition-colors">Strict Commits</h3>
+                        <div class="flex-grow bg-[#050505] rounded-lg border border-white/5 p-5 font-mono text-[11px] text-textMuted overflow-hidden shadow-inner leading-relaxed">
+                            <span class="text-[#e5c07b]">commit</span> <span class="text-white">a9f8b2c</span><br/>
+                            <span class="text-[#56b6c2]">Author:</span> npkpadala<br/><br/>
+                            <strong class="text-white text-xs">feat(billing): idempotent bill-payment pipeline</strong><br/><br/>
+                            - Guards against double-charge on retries<br/>
+                            - Fraud + conduct checks before settle<br/>
+                            - Every action written to audit log
+                        </div>
+                    </div>
+
+                    <div class="magnetic-card rounded-xl p-6 flex flex-col gpu-accel group gsap-fade-up min-h-[440px]">
+                        <div class="text-accent font-mono text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
+                            <span class="w-1 h-1 rounded-full bg-accent"></span> 03. Automation
+                        </div>
+                        <h3 class="text-2xl font-bold mb-6 text-white group-hover:text-glow transition-colors">CI / CD</h3>
+                        <div class="flex-grow bg-[#050505] rounded-lg border border-white/5 p-5 flex flex-col gap-4 font-mono text-[11px] shadow-inner">
+                            <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span> <span class="text-white">Typecheck (tsc)</span> <span class="ml-auto text-gray-500">12.4s</span></div>
+                            <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span> <span class="text-white">Pytest Suite</span> <span class="ml-auto text-gray-500">4.1s</span></div>
+                            <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span> <span class="text-white">Docker Build</span> <span class="ml-auto text-gray-500">38.0s</span></div>
+                            <div class="w-full h-px bg-white/10 my-1"></div>
+                            <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_8px_var(--accent)]"></span> <span class="text-glow font-bold">Deploying to Oracle Cloud...</span></div>
+                        </div>
+                    </div>
+
+                    <div class="magnetic-card rounded-xl p-6 flex flex-col gpu-accel group gsap-fade-up min-h-[440px]">
+                        <div class="text-accent font-mono text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
+                            <span class="w-1 h-1 rounded-full bg-accent"></span> 04. Telemetry
+                        </div>
+                        <h3 class="text-2xl font-bold mb-6 text-white group-hover:text-glow transition-colors">Observability</h3>
+                        <div class="flex-grow bg-[#050505] rounded-lg border border-white/5 p-5 font-mono flex flex-col justify-end relative shadow-inner">
+                            <div class="absolute inset-0 p-5 flex items-end gap-1 opacity-40">
+                                <div class="w-full bg-accent" style="height: 20%"></div>
+                                <div class="w-full bg-accent" style="height: 35%"></div>
+                                <div class="w-full bg-accent" style="height: 25%"></div>
+                                <div class="w-full bg-accent" style="height: 50%"></div>
+                                <div class="w-full bg-accent" style="height: 40%"></div>
+                                <div class="w-full bg-accent" style="height: 80%"></div>
+                                <div class="w-full bg-glow shadow-[0_0_10px_var(--glow)]" style="height: 100%"></div>
+                            </div>
+                            <div class="relative z-10 border-t border-white/10 pt-3 flex justify-between text-xs">
+                                <span class="text-textMuted">p99 Latency</span>
+                                <span class="text-white font-bold"><span class="counter" data-target="42">0</span>ms</span>
+                            </div>
+                            <div class="relative z-10 flex justify-between mt-2 text-xs">
+                                <span class="text-textMuted">Uptime</span>
+                                <span class="text-white font-bold">99.9%</span>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </section>
+
+<!-- Engineering Timeline (Scroll Draw) -->
+        <section class="py-32 px-6 max-w-4xl mx-auto relative">
+            <h2 class="text-3xl font-bold mb-16 text-center gsap-fade-up">Capability Progression</h2>
+
+            <div class="relative">
+                <svg class="absolute left-4 top-2 bottom-0 w-8 h-full" preserveAspectRatio="none" style="z-index: 0;">
+                    <path id="progress-line" d="M 4 0 L 4 1000" stroke="rgba(47, 111, 237, 0.3)" stroke-width="2" fill="none" class="timeline-path" />
+                    <circle cx="4" cy="0" r="4" fill="var(--glow)">
+                        <animateMotion dur="4s" repeatCount="indefinite" path="M 4 0 L 4 1000" />
+                    </circle>
+                </svg>
+
+                <div class="space-y-20 ml-16 relative z-10">
+                    <div class="relative gsap-fade-up group">
+                        <div class="absolute -left-[54px] top-1 w-4 h-4 rounded-full bg-base border-2 border-accent shadow-[0_0_10px_var(--accent)] group-hover:bg-accent transition-colors"></div>
+                        <div class="text-[10px] uppercase tracking-widest font-mono text-glow mb-2">Current Operation Level</div>
+                        <h3 class="text-2xl font-bold text-white">Full-Stack Ownership</h3>
+                        <p class="text-textMuted mt-3 leading-relaxed">Designing multi-tenant systems, leading technical direction, and owning the entire lifecycle from database schema to production infrastructure - AI-accelerated. The "Software Company of One" methodology.</p>
+                    </div>
+                    <div class="relative gsap-fade-up group">
+                        <div class="absolute -left-[54px] top-1 w-4 h-4 rounded-full bg-base border-2 border-white/20 group-hover:border-accent transition-colors"></div>
+                        <div class="text-[10px] uppercase tracking-widest font-mono text-textMuted mb-2">Unlocked: Scalability</div>
+                        <h3 class="text-2xl font-bold text-white">Cloud Infra &amp; CI/CD</h3>
+                        <p class="text-textMuted mt-3 leading-relaxed">Running Docker + PM2 + Nginx + Postgres + Redis on an Oracle Cloud ARM VM with TLS for 4 domains, LVM storage design, automated backups and self-built monitoring.</p>
+                    </div>
+                    <div class="relative gsap-fade-up group">
+                        <div class="absolute -left-[54px] top-1 w-4 h-4 rounded-full bg-base border-2 border-white/20 group-hover:border-accent transition-colors"></div>
+                        <div class="text-[10px] uppercase tracking-widest font-mono text-textMuted mb-2">Unlocked: Foundation</div>
+                        <h3 class="text-2xl font-bold text-white">Production Basics</h3>
+                        <p class="text-textMuted mt-3 leading-relaxed">Shipped initial user-facing applications. Mastered React state cycles, REST + API design, and relational database indexing. Learned the reality of maintaining live code.</p>
+                    </div>
                 </div>
             </div>
         </section>
+
     </main>
 
     <footer class="border-t border-white/10 py-6 px-6 relative z-10 bg-base">
@@ -527,11 +670,8 @@
         /* Kinetic headline (home) */
         const headline = document.getElementById('kinetic-headline');
         if (headline) {
-            const text = "Risk is the Heart of Success.";
-            headline.innerHTML = text.split(' ').map(word => {
-                const cls = /^Heart$/.test(word) ? 'inline-block relative text-glow' : 'inline-block relative';
-                return `<span class="${cls}">${word}&nbsp;</span>`;
-            }).join('');
+            const text = "Risk is the Heart of Business.";
+            headline.innerHTML = text.split(' ').map(word => `<span class="inline-block relative">${word}&nbsp;</span>`).join('');
             gsap.from("#kinetic-headline span", { y: 34, opacity: 0, filter: "blur(12px)", duration: 1.2, stagger: 0.09, ease: "power3.out", delay: 0.2 });
         }
         if (document.querySelector('.gsap-hero-sub')) {
@@ -788,189 +928,72 @@
             window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { resize(); init(); }, 200); });
         })();
 
-        /* Custom CI/CD pipeline lattice (home) — jobs flow through stage gates */
-        (function () {
-            const canvas = document.getElementById('cicd-pipeline');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const STAGES = [
-                { f: 0.12, label: 'COMMIT' },
-                { f: 0.31, label: 'BUILD' },
-                { f: 0.50, label: 'TEST' },
-                { f: 0.69, label: 'DEPLOY' },
-                { f: 0.88, label: 'MONITOR' }
-            ];
-            const RAIL_GAP = 62, TOP = 74, BOT = 74;
-            let W, H, rails = [], jobs = [], glow = [], raf = null;
-
-            function build() {
-                const usable = Math.max(RAIL_GAP, H - TOP - BOT);
-                const n = Math.max(4, Math.floor(usable / RAIL_GAP));
-                const pad = TOP + (usable - (n - 1) * RAIL_GAP) / 2;
-                rails = Array.from({ length: n }, (_, i) => pad + i * RAIL_GAP);
-                glow = STAGES.map(() => 0);
-                jobs = [];
-                rails.forEach((y, ri) => {
-                    const count = 1 + (ri % 2);
-                    for (let k = 0; k < count; k++) {
-                        jobs.push({ y, x: Math.random() * W, speed: 0.4 + Math.random() * 0.9, size: 1.5 + Math.random() * 1.4 });
-                    }
-                });
-            }
-            function resize() {
-                const DPR = Math.min(window.devicePixelRatio || 1, 2);
-                W = canvas.clientWidth; H = canvas.clientHeight;
-                canvas.width = W * DPR; canvas.height = H * DPR;
-                ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-                build();
-            }
-            function frame(animate) {
-                ctx.clearRect(0, 0, W, H);
-                if (!rails.length) return;
-                const first = rails[0], last = rails[rails.length - 1];
-
-                // rails (faint horizontal gradient lines)
-                ctx.lineWidth = 1;
-                for (const y of rails) {
-                    const g = ctx.createLinearGradient(0, 0, W, 0);
-                    g.addColorStop(0, 'rgba(47,111,237,0)');
-                    g.addColorStop(0.5, 'rgba(79,140,255,0.09)');
-                    g.addColorStop(1, 'rgba(47,111,237,0)');
-                    ctx.strokeStyle = g;
-                    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-                }
-                // stage gates + node dots
-                STAGES.forEach((s, si) => {
-                    const x = s.f * W;
-                    ctx.strokeStyle = 'rgba(79,140,255,' + (0.05 + glow[si] * 0.28) + ')';
-                    ctx.beginPath(); ctx.moveTo(x, first - 14); ctx.lineTo(x, last + 14); ctx.stroke();
-                    for (const y of rails) {
-                        ctx.beginPath(); ctx.arc(x, y, 1.6, 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(120,160,255,' + (0.22 + glow[si] * 0.5) + ')';
-                        ctx.fill();
-                    }
-                    if (animate) glow[si] *= 0.92;
-                });
-                // jobs flowing through the gates
-                ctx.globalCompositeOperation = 'lighter';
-                for (const j of jobs) {
-                    if (animate) {
-                        const px = j.x;
-                        j.x += j.speed;
-                        if (j.x > W + 20) { j.x = -20; j.speed = 0.4 + Math.random() * 0.9; }
-                        STAGES.forEach((s, si) => {
-                            const gx = s.f * W;
-                            if (px < gx && j.x >= gx) glow[si] = Math.min(1, glow[si] + 0.55);
-                        });
-                    }
-                    for (let t = 0; t < 6; t++) {
-                        const tx = j.x - t * 6;
-                        ctx.beginPath(); ctx.arc(tx, j.y, j.size * (1 - t / 10), 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(79,140,255,' + ((1 - t / 6) * 0.5) + ')';
-                        ctx.fill();
-                    }
-                    ctx.beginPath(); ctx.arc(j.x, j.y, j.size, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(210,228,255,0.9)';
-                    ctx.fill();
-                }
-                ctx.globalCompositeOperation = 'source-over';
-                // stage labels
-                ctx.font = '10px "JetBrains Mono", monospace';
-                ctx.textAlign = 'center';
-                STAGES.forEach((s, si) => {
-                    ctx.fillStyle = 'rgba(155,163,180,' + (0.32 + glow[si] * 0.55) + ')';
-                    ctx.fillText(s.label, s.f * W, last + 30);
-                });
-            }
-            function loop() { frame(true); raf = requestAnimationFrame(loop); }
-            function start() { if (!raf && !document.hidden) raf = requestAnimationFrame(loop); }
-            function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
-
-            resize(); frame(false);
-            if (prefersReduced) return;
-            start();
-            document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
-            let rt;
-            window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 200); });
-        })();
-
-        /* 3D point-sphere (home hero) — rotating globe of dots, depth-shaded */
+        /* Sparkle field (home) - reference motion, adapted */
         (function () {
             const canvas = document.getElementById('sparkle-field');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const PALETTE = [
-                '47,111,237',    // accent blue
-                '79,140,255',    // glow blue
-                '120,160,255',   // light blue
-                '138,110,255',   // violet (depth accent)
-                '235,242,255',   // near-white sparkle
-                '26,38,92'       // deep indigo — dark tone that recedes, adds depth
+                '47,111,237',   // accent blue
+                '79,140,255',   // glow blue
+                '120,160,255',  // light blue
+                '138,110,255',  // violet (depth accent)
+                '235,242,255'   // near-white sparkle
             ];
-            const rand = (a, b) => Math.random() * (b - a) + a;
-            let W, H, cx, cy, R, pts = [], raf = null, rotY = 0, rotX = 0;
-            const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-
+            const FIELD_RADIUS_RATIO = 0.34;
+            const MIN_R = 0.6, MAX_R = 1.8, JITTER = 0.28;
+            const TWINKLE_MIN = 0.045, TWINKLE_MAX = 0.12;
+            let W, H, cx, cy, fieldR, particles = [], raf = null;
+            function rand(min, max) { return Math.random() * (max - min) + min; }
             function resize() {
                 const DPR = Math.min(window.devicePixelRatio || 1, 2);
                 W = canvas.clientWidth; H = canvas.clientHeight;
                 canvas.width = W * DPR; canvas.height = H * DPR;
                 ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-                cx = W / 2; cy = H / 2; R = Math.min(W, H) * 0.34;
+                cx = W / 2; cy = H / 2;
+                fieldR = Math.min(W, H) * FIELD_RADIUS_RATIO;
             }
-            function build() {
-                const n = Math.round(Math.min(1000, Math.max(320, (W * H) / 1600)));
-                const gold = Math.PI * (3 - Math.sqrt(5));
-                pts = [];
-                for (let i = 0; i < n; i++) {
-                    const y = 1 - (i / (n - 1)) * 2, rr = Math.sqrt(1 - y * y), th = i * gold;
-                    pts.push({
-                        x: Math.cos(th) * rr, y: y, z: Math.sin(th) * rr,
-                        c: (Math.abs(y) > 0.6 || Math.random() < 0.14) ? '138,110,255'
-                             : PALETTE[Math.floor(Math.random() * PALETTE.length)],
-                        tw: rand(0, 6.28), sp: rand(0.02, 0.05), s: rand(0.7, 1.7)
-                    });
-                }
+            function layout() {
+                const count = Math.round(Math.min(900, Math.max(280, (W * H) / 1700)));
+                particles = Array.from({ length: count }, () => {
+                    const angle = rand(0, Math.PI * 2);
+                    const dist = Math.sqrt(Math.random()) * fieldR;
+                    return {
+                        ox: Math.cos(angle) * dist, oy: Math.sin(angle) * dist,
+                        r: rand(MIN_R, MAX_R),
+                        color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+                        phase: rand(0, Math.PI * 2),
+                        speed: rand(TWINKLE_MIN, TWINKLE_MAX),
+                        jx: rand(-JITTER, JITTER), jy: rand(-JITTER, JITTER)
+                    };
+                });
             }
-            function draw(animate, t) {
+            function draw(animate) {
                 ctx.clearRect(0, 0, W, H);
-                if (animate) rotY += 0.0026;
-                rotX = Math.sin(t * 0.0004) * 0.32 + mouse.ty * 0.22;
-                const yaw = rotY + mouse.tx * 0.45, cyaw = Math.cos(yaw), syaw = Math.sin(yaw);
-                const cpit = Math.cos(rotX), spit = Math.sin(rotX);
                 ctx.globalCompositeOperation = 'lighter';
-                for (const p of pts) {
-                    const x = p.x * cyaw - p.z * syaw, z = p.x * syaw + p.z * cyaw, y = p.y;
-                    const y2 = y * cpit - z * spit, z2 = y * spit + z * cpit;
-                    const depth = (z2 + 1) / 2;               // 0 back … 1 front
-                    if (animate) p.tw += p.sp;
-                    const tw = 0.55 + 0.45 * Math.sin(p.tw);
-                    const a = (0.12 + depth * 0.9) * tw;
-                    const size = p.s * (0.45 + depth * 1.1);
-                    ctx.fillStyle = 'rgba(' + p.c + ',' + a.toFixed(3) + ')';
-                    ctx.beginPath(); ctx.arc(cx + x * R, cy + y2 * R, size, 0, 6.283); ctx.fill();
+                for (const p of particles) {
+                    if (animate) p.phase += p.speed;
+                    const x = cx + p.ox + Math.sin(p.phase * 0.5) * p.jx * 4;
+                    const y = cy + p.oy + Math.cos(p.phase * 0.5) * p.jy * 4;
+                    const alpha = 0.25 + Math.abs(Math.sin(p.phase)) * 0.75;
+                    ctx.fillStyle = 'rgba(' + p.color + ',' + alpha + ')';
+                    ctx.beginPath();
+                    ctx.arc(x, y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
                 }
                 ctx.globalCompositeOperation = 'source-over';
             }
-            function loop(now) {
-                mouse.tx += (mouse.x - mouse.tx) * 0.05; mouse.ty += (mouse.y - mouse.ty) * 0.05;
-                draw(true, now || 0);
-                raf = requestAnimationFrame(loop);
-            }
+            function loop() { draw(true); raf = requestAnimationFrame(loop); }
             function start() { if (!raf && !document.hidden) raf = requestAnimationFrame(loop); }
             function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
-            resize(); build(); draw(false, 0);
+            resize(); layout(); draw(false);
             if (prefersReduced) return;
             start();
-            window.addEventListener('pointermove', e => {
-                mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
-                mouse.y = (e.clientY / window.innerHeight - 0.5) * 2;
-            });
             document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
             let rt;
             window.addEventListener('resize', () => {
                 clearTimeout(rt);
-                rt = setTimeout(() => { resize(); build(); draw(false, 0); }, 200);
+                rt = setTimeout(() => { resize(); layout(); draw(false); }, 200);
             });
             if (window.gsap) gsap.from(canvas, { opacity: 0, duration: 2.2, ease: "power2.out", delay: 0.3 });
         })();
