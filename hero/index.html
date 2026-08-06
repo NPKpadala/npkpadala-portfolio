@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NPK Hero — dev playground</title>
+    <style>
+      body {
+        margin: 0;
+        background: #0d1117;
+        font-family: ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+      }
+      /* Deliberately tall: lets the IntersectionObserver pause behaviour be
+         checked by scrolling the hero out of view. */
+      .spacer {
+        height: 120vh;
+        display: grid;
+        place-items: center;
+        color: #8b949e;
+        font-family: ui-monospace, monospace;
+        font-size: 0.8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hero-root"></div>
+    <div class="spacer">scroll back up — the animation pauses while it is off screen</div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
